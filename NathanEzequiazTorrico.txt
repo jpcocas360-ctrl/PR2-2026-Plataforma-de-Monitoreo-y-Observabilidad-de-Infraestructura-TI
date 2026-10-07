@@ -1,1 +1,4 @@
-hola
+Nombre: Nathan Ezequiaz
+Apellido: Torrico Torrez
+Grupo: Plataforma de Monitoreo y Observabilidad de Infraestructura TI
+Rol o responsabilidad principal: Project Manager & Frontend Developer
