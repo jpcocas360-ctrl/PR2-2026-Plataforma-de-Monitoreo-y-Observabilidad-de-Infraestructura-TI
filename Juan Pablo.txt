@@ -1,4 +1,0 @@
-Nombre:Juan Pablo 
-Apellido:Coca Soliz
-Grupo:Plataforma de Monitoreo y Observabilidad de Infraestructura TI
-Rol o responsabilidad principal:DevOps & Backend Specialist
