@@ -1,0 +1,3 @@
+Nombre: Juan Gabriel Ortega Orellana
+Rol: Project Manager y Frontend Developer
+Responsabilidades: coordinación del proyecto, experiencia de usuario y dashboards.
