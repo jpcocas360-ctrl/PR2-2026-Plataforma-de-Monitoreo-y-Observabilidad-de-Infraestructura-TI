@@ -1,0 +1,3 @@
+Nombre: Nathan Ezequiaz Torrico
+Rol: Systems & Infrastructure Engineer
+Responsabilidades: virtualización en Proxmox VE, despliegue con Docker y agentes de recolección.

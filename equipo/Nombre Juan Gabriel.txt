@@ -1,4 +1,0 @@
-Nombre: Juan Gabriel
-Apellido: Ortega Orellana
-Grupo: Plataforma de Monitoreo y Observabilidad de Infraestructura TI
-Rol o responsabilidad principal: Project Manager & Frontend Developer

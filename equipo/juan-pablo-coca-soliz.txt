@@ -1,0 +1,3 @@
+Nombre: Juan Pablo Coca Soliz
+Rol: DevOps & Backend Specialist
+Responsabilidades: servidor central de observabilidad con Prometheus y Grafana, integración y alertas automáticas.

@@ -1,78 +1,96 @@
 # Plataforma de Monitoreo y Observabilidad de Infraestructura TI
 
-**Equipo de Desarrollo:** ByteCraft Solutions | **Gestión:** 2026 | **Materia:** Sistemas Operativos 2
+**Equipo:** ByteCraft Solutions · **Asignatura:** Sistemas Operativos 2 · **Gestión:** 2026
 
----
+## Propósito
 
-## 1. Descripción y Propósito del Proyecto
+Este proyecto busca ayudar al personal de TI universitario a detectar fallos y saturación de recursos antes de que interrumpan las actividades académicas. La propuesta es implementar y demostrar una plataforma de monitoreo en un entorno de prueba, con métricas, dashboards y una alerta preventiva.
 
-Las infraestructuras informáticas institucionales, tales como los laboratorios y centros de cómputo universitarios, frecuentemente operan bajo un esquema de administración reactiva. En este modelo, los administradores de red y sistemas identifican y resuelven incidentes únicamente después de que los servicios han experimentado caídas, lo que genera altos tiempos de inactividad (downtime) y afecta directamente el desarrollo de las actividades académicas y administrativas.
+## Qué se construirá
 
-El propósito central de este proyecto es diseñar e implementar una transición técnica hacia una **gestión preventiva**. A través de la construcción de una plataforma centralizada de monitoreo basada en tecnologías de código abierto, el sistema permitirá recolectar, almacenar y visualizar en tiempo real el estado de los recursos críticos de la infraestructura (uso de CPU, consumo de memoria RAM, saturación de almacenamiento y tráfico de red). Asimismo, el sistema contará con la capacidad de emitir alertas automáticas tempranas ante anomalías o el sobrepaso de umbrales críticos, mitigando el riesgo de caídas masivas.
+El objetivo es desplegar Prometheus y Grafana en una máquina virtual sobre Proxmox VE, utilizando Docker Compose. Node Exporter permitirá recolectar métricas de un servidor de prueba; Grafana presentará CPU, memoria, almacenamiento y red.
 
-## 2. Arquitectura y Stack Tecnológico
+### MVP
 
-La plataforma está diseñada sobre los estándares actuales de la industria para observabilidad nativa de la nube, garantizando eficiencia, bajo consumo de recursos y alta escalabilidad:
+La primera versión funcional incluirá:
 
-* **Prometheus:** Actuará como el motor central (Base de datos de series temporales - TSDB) encargado de recolectar (hacer *scraping*) y almacenar las métricas de la infraestructura mediante su lenguaje de consultas PromQL.
-* **Grafana:** Herramienta de visualización avanzada que se conectará a Prometheus para generar paneles de control (dashboards) interactivos y dinámicos para el análisis de los datos.
-* **Agentes de Recolección:** Se emplearán exportadores ligeros como Node Exporter, SNMP Exporter y cAdvisor instalados en los equipos objetivo para extraer las métricas del hardware y del sistema operativo.
-* **Docker y Docker Compose:** La orquestación y el despliegue de los servicios centrales se realizará mediante contenedores, asegurando un entorno aislado, reproducible y libre de conflictos de dependencias, alojado sobre el hipervisor Proxmox VE.
+- Prometheus y Grafana desplegados mediante Docker Compose.
+- Un servidor de prueba monitoreado con Node Exporter.
+- Un dashboard con las métricas prioritarias disponibles.
+- Una alerta demostrada de principio a fin, enviada a un canal elegido por el equipo: Telegram o Discord.
+- Instrucciones para desplegar, verificar y repetir la instalación.
 
-## 3. Usuarios Principales y Beneficios
+**Criterio de éxito:** Prometheus recibe métricas del host; Grafana las muestra en el dashboard; una condición de prueba activa una alerta y la notificación llega al canal configurado; otro integrante puede repetir el procedimiento con la documentación.
 
-* **Administradores de Red y Sistemas TI:** Obtendrán visibilidad total e instantánea del rendimiento del hardware, eliminando la necesidad de resolver incidentes "a ciegas".
-* **Personal de Soporte Técnico:** Contarán con herramientas automatizadas para la detección de cuellos de botella preventivos antes de que los usuarios finales reporten fallas.
-* **Estudiantes y Docentes (Usuarios Finales):** Se beneficiarán de manera indirecta al contar con servicios estables y laboratorios informáticos con tiempos de inactividad reducidos al mínimo.
+SNMP Exporter y cAdvisor son ampliaciones condicionadas a que el MVP funcione y exista tiempo y acceso para validarlos. No forman parte del alcance mínimo.
 
-## 4. Integrantes y Roles
-
-El equipo de trabajo opera bajo un marco ágil adaptado a equipos pequeños, garantizando la integración continua y la distribución equilibrada de las responsabilidades de ingeniería:
-
-| Integrante | Rol y Responsabilidad Principal |
-|---|---|
-| **Juan Gabriel Ortega Orellana** | Project Manager & Frontend Developer (Coordinación general, diseño UX, integración visual de Dashboards y gestión del proyecto) |
-| **Nathan Ezequiaz Torrico Torrez** | Systems & Infrastructure Engineer (Configuración del entorno de virtualización en Proxmox VE y despliegue de Agentes de recolección de red) |
-| **Juan Pablo Coca Soliz** | DevOps & Backend Specialist (Despliegue automatizado de la infraestructura central mediante Docker, interconexión de servicios y reglas de Alertas) |
-
-## 5. Organización del Repositorio y Documentación
-
-Este repositorio funciona como el centro de control oficial del proyecto durante el semestre. La estructura inicial de los directorios para la documentación técnica y planificación es la siguiente:
+## Arquitectura propuesta
 
 ```text
-/
+Proxmox VE
+└── Máquina virtual de prueba
+    ├── Docker Compose
+    │   ├── Prometheus ── consulta métricas de Node Exporter
+    │   └── Grafana ───── consulta Prometheus y muestra dashboards
+    └── Alerta de prueba ── Telegram o Discord
+```
+
+Los componentes y configuraciones se incorporarán al repositorio conforme avance la implementación. Las credenciales y tokens no deben versionarse.
+
+## Equipo
+
+| Integrante | Responsabilidad principal |
+|---|---|
+| **Juan Gabriel Ortega Orellana** | Project Manager y Frontend Developer: coordinación, requisitos, UX y dashboards. |
+| **Nathan Ezequiaz Torrico** | Systems & Infrastructure Engineer: Proxmox, Docker y agentes de recolección. |
+| **Juan Pablo Coca Soliz** | DevOps & Backend Specialist: Prometheus, Grafana, integración y alertas. |
+
+Los perfiles individuales están en [`equipo/`](equipo/).
+
+## Documentación
+
+- [Informe actualizado del proyecto (PDF)](docs/proyecto/informe-proyecto.pdf): problema, objetivos, equipo, arquitectura y planificación.
+- [Presentación ejecutiva (PDF)](docs/proyecto/Monitoreo%20de%20Infraestructura%20TI.pdf): resumen visual para exposición.
+- [Diagrama de Gantt (Excel)](docs/planificacion/gantt.xlsx): tareas, responsables, fechas, duración, progreso y estado.
+
+## Plan de trabajo
+
+El plan abarca del **12 de agosto al 11 de diciembre de 2026**. El informe y el cronograma detallado enumeran ocho fases; el equipo debe mantener este número y las fechas sincronizados en todos los documentos.
+
+| Fase | Actividad | Periodo previsto |
+|---|---|---|
+| 1 | Inicio y planificación | 12 ago – 18 sep |
+| 2 | Investigación y diseño | 1 sep – 25 sep |
+| 3 | Documentación y validación del diseño | 21 sep – 7 oct |
+| 4 | Preparación de infraestructura | 23 sep – 16 oct |
+| 5 | Despliegue de la plataforma | 14 oct – 30 oct |
+| 6 | Implementación de agentes y recolección | 28 oct – 13 nov |
+| 7 | Diseño e integración de dashboards | 10 nov – 27 nov |
+| 8 | Alertas, pruebas y entrega final | 23 nov – 11 dic |
+
+Las fechas se solapan cuando hay trabajo paralelo. El Gantt debe indicar las dependencias y actualizarse con el progreso real; consultar ese archivo para el estado vigente de cada tarea.
+
+## Estado del repositorio
+
+El repositorio contiene actualmente el README, documentos del proyecto, cronograma y perfiles del equipo. La implementación técnica está planificada; verifica en el Gantt el estado actualizado de Docker y de las tareas de despliegue antes de asumir que los servicios ya están operativos.
+
+## Estructura
+
+```text
+.
 ├── README.md
 ├── docs/
-│   ├── proyecto/
-│   │   ├── Monitoreo de Infraestructura TI.pdf
-│   │   └── Plataforma de Monitoreo y Observabilidad de Infraestructura TI (1).pdf
-│   └── planificacion/
-│       └── diagrama de gantt.xlsx
+│   ├── planificacion/
+│   │   └── gantt.xlsx
+│   └── proyecto/
+│       ├── informe-proyecto.pdf
+│       └── Monitoreo de Infraestructura TI.pdf
 └── equipo/
-    ├── Juan Pablo.txt
-    ├── NathanEzequiazTorrico.txt
-    └── Nombre Juan Gabriel.txt
-(Nota: En etapas posteriores, este repositorio alojará los directorios /src y /config correspondientes al código fuente, los archivos docker-compose y la configuración de infraestructura como código).
+    ├── juan-gabriel-ortega-orellana.txt
+    ├── nathan-ezequiaz-torrico.txt
+    └── juan-pablo-coca-soliz.txt
+```
 
-6. Estado Actual y Fases del Proyecto
-El desarrollo se encuentra estructurado con base en el Diagrama de Gantt oficial. Actualmente, el proyecto ha superado con éxito la fase de planificación y se encuentra ingresando a la etapa de despliegue técnico:
+## Entrega
 
-Fase de Inicio y Planificación (Completada):
-
-[x] Definición de la problemática, objetivos, alcance técnico y selección del stack de herramientas.
-
-[x] Estructuración del repositorio oficial como centro de control del equipo.
-
-[x] Consolidación de la documentación formal y el cronograma de actividades (Gantt).
-
-[x] Preparación y configuración de la red y el entorno de virtualización base en Proxmox VE.
-
-Fase de Desarrollo y Despliegue (En Progreso):
-
-[ ] Creación e implementación de tareas de ingeniería mediante la plataforma de Issues de GitHub.
-
-[ ] Instalación del motor Docker y estructuración del archivo docker-compose.yml.
-
-[ ] Despliegue automatizado del servidor central (Prometheus y Grafana).
-
-[ ] Despliegue de los primeros agentes de recolección en los entornos de prueba para validar la extracción de métricas.
+**Fecha prevista:** 11 de diciembre de 2026. La demostración final debe incluir el flujo de métricas, dashboard, alerta de prueba, resultados de validación y documentación para repetir el despliegue.
